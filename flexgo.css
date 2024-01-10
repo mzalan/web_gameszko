@@ -1,0 +1,8 @@
+#player {
+    background-color: blue;
+    width: 150px;
+    height: 150px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
