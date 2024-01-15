@@ -10,6 +10,10 @@
     border:1px solid black;
     background: gray;
     position: fixed;
-    text-align: center;
-    font-size:60pt;
+    z-index:0;
+}
+.tile {
+    position: fixed;
+    border: 1px solid blue;
+    z-index: 2;
 }
