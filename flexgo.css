@@ -6,3 +6,10 @@
     left: 0;
     top: 0;
 }
+#jatekterulet {
+    border:1px solid black;
+    background: gray;
+    position: fixed;
+    text-align: center;
+    font-size:60pt;
+}
