@@ -7,7 +7,7 @@ let jatekTop;
 let playerSize;
 let playerX;
 let playerY;
-let playerSpeed = 18;
+let playerSpeed;
 function keypress(event) {
     var key=event.wich || event.keyCode;
     if(key == "87") {
@@ -27,7 +27,6 @@ function keypress(event) {
 function UpdatePlayerPosition(x, y) {
     playerX = CheckPosition(playerX, 0, jatekWidth - playerSize, x);
     playerY = CheckPosition(playerY, 0, jatekHeight - playerSize, y);
-    console.log(playerX, playerY);
     player.style.top = playerY + jatekTop + "px";
     player.style.left = playerX + jatekLeft  + "px";
     player.style.width = playerSize + "px";
@@ -67,8 +66,9 @@ function GameRender() {
     jatekterulet.style.left = jatekLeft + "px";
     let tileSize = jatekWidth / 36;
     playerSize = tileSize * 1.5;
-    playerX = 400;
-    playerY = 500;
+    playerX = 4 * tileSize;
+    playerY = 5 * tileSize;
+    playerSpeed = tileSize/2;
     UpdatePlayerPosition(0, 0);
 
     for (let i = 0; i < 20; i++) {
