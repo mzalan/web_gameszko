@@ -1,10 +1,51 @@
+let height = window.innerHeight;
+let width = window.innerWidth;
+let jatekHeight;
+let jatekWidth;
+let jatekLeft;
+let jatekTop;
+let playerSize;
+let playerX;
+let playerY;
+let playerSpeed = 18;
+function keypress(event) {
+    var key=event.wich || event.keyCode;
+    if(key == "87") {
+        UpdatePlayerPosition(0, playerSpeed * -1);
+    }
+    else if(key =="83") {
+        UpdatePlayerPosition(0, playerSpeed * 1);
+    }
+    else if(key =="65") {
+        UpdatePlayerPosition(playerSpeed * -1, 0);
+    }
+    else if(key =="68") {
+        UpdatePlayerPosition(playerSpeed * 1, 0);
+    }
+}
+
+function UpdatePlayerPosition(x, y) {
+    playerX = CheckPosition(playerX, 0, jatekWidth - playerSize, x);
+    playerY = CheckPosition(playerY, 0, jatekHeight - playerSize, y);
+    console.log(playerX, playerY);
+    player.style.top = playerY + jatekTop + "px";
+    player.style.left = playerX + jatekLeft  + "px";
+    player.style.width = playerSize + "px";
+    player.style.height = playerSize + "px";
+}
+
+function CheckPosition(player, minBound, maxBound, delta) {
+    if(player + delta < minBound) {
+        return minBound;
+    }
+    else if(player + delta > maxBound) {
+        return maxBound;
+    }
+    else {
+        return player + delta;
+    }
+}
 function GameRender() { 
-    let height = window.innerHeight;
-    let width = window.innerWidth;
-    let jatekHeight;
-    let jatekWidth;
-    let jatekLeft;
-    let jatekTop;
     if(height * 1.8 > width) {
         jatekWidth = width;
         jatekHeight = width / 1.8;
@@ -17,11 +58,19 @@ function GameRender() {
         jatekTop = 0;
         jatekLeft = (width - jatekWidth) / 2;
     }
+    // if(jatekterulet.children.length > 0) {
+    //    jatekterulet.children.forEach(child => { if(child.id != player) {jatekterulet.removeChild(child)}});
+    // }
     jatekterulet.style.width = jatekWidth+"px";
     jatekterulet.style.height = jatekHeight+"px";
     jatekterulet.style.top = jatekTop + "px";
     jatekterulet.style.left = jatekLeft + "px";
     let tileSize = jatekWidth / 36;
+    playerSize = tileSize * 1.5;
+    playerX = 400;
+    playerY = 500;
+    UpdatePlayerPosition(0, 0);
+
     for (let i = 0; i < 20; i++) {
         for (let j = 0; j < 36; j++)  {
             let tile = document.createElement("span");
