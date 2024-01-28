@@ -38,8 +38,6 @@ function keypress(event) {
 function UpdatePlayerPosition(x, y) {
     let newPlayerX = CheckPosition(playerX, 0, jatekWidth - playerSize, x);
     let newPlayerY = CheckPosition(playerY, 0, jatekHeight - playerSize, y);
-
-    // Check for wall collision before updating player position
     if (!checkWallCollision(newPlayerY + jatekTop, newPlayerX + jatekLeft, playerSize)) {
         playerX = newPlayerX;
         playerY = newPlayerY;
@@ -52,6 +50,7 @@ function UpdatePlayerPosition(x, y) {
         restart(playerY + jatekTop, playerX + jatekLeft, playerSize);
     }
 }
+
 
 function CheckPosition(player, minBound, maxBound, delta) {
     if (player + delta < minBound) {
@@ -186,12 +185,11 @@ function checkWallCollision(playerTop, playerLeft, playerSize) {
         let wallSize = tileSize;
         let overlapX = Math.max(0, Math.min(playerLeft + playerSize, wallLeft + wallSize) - Math.max(playerLeft, wallLeft));
         let overlapY = Math.max(0, Math.min(playerTop + playerSize, wallTop + wallSize) - Math.max(playerTop, wallTop));
-
-        // Check for collision
-        if (overlapX > 0 && overlapY > 0) {
-            return true; // Collision with a wall
+        if (overlapX > 1 && overlapY > 1 && overlapY < playerSize) {
+            return true;
         }
     }
 
-    return false; // No collision with walls
+    return false;
+
 }
