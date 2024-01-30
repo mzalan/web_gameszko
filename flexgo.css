@@ -1,28 +1,29 @@
 body {
     margin:0;
+    background-color: rgb(2, 0, 36);
 }
 #player {
-    background-color: black;
+    background-color: hotpink;
     position: fixed;
     z-index:3;
 }
 #jatekterulet {
     border:1px solid black;
-    background: gray;
+    background: #4d6b69;
     position: fixed;
     z-index:0;
 }
 .tile {
     position: fixed;
-    border: 1px solid blue;
+    border: 1px solid #425c5a;
     z-index: 2;
 }
 .fal{
-    background-color: black;
+    background-color: #50cc96;
 }
 .coin {
     background-image: url("./coin.png");
-    background-color: darkgoldenrod;
+    background-color: yellow;
     z-index: 2;
 
 }
@@ -35,6 +36,6 @@ body {
     border: 1px solid white;
 }
 #sprogress {
-    background-color: yellow;
+    background-color: rgb(2, 0, 36);
     position: fixed;
 }

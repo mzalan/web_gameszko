@@ -12,7 +12,7 @@ let wasd = [false, false, false, false];
 let dirCap = 1;
 let movementTimeout = setInterval(PlayerMoving, 10);
 let latestKeys = [0, 0];
-let superCharge = 95;
+let superCharge = 0;
 let coinCount = 0;
 let tileSize;
 let objects = [];
@@ -187,9 +187,9 @@ function GameRender() {
     playerSize = tileSize * 1.5;
     playerX = 4 * tileSize;
     playerY = 2 * tileSize;
-    playerSpeed = tileSize / 2;
+    playerSpeed = tileSize / 4;
     UpdatePlayerPosition(0, 0);
-    fetch('testlevel2.txt').then((res) => res.text()).then((text) => {
+    fetch('testlevel3.txt').then((res) => res.text()).then((text) => {
         let lines = text.split("\n");
         for (let y = 0; y < 20; y++) {
             for (let x = 0; x < 36; x++) {
