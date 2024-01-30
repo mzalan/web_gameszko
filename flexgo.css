@@ -1,3 +1,6 @@
+body {
+    margin:0;
+}
 #player {
     background-color: black;
     position: fixed;
@@ -26,4 +29,12 @@
 .restart 
 {
     background-color: red;
+}
+#superb {
+    position: fixed;
+    border: 1px solid white;
+}
+#sprogress {
+    background-color: yellow;
+    position: fixed;
 }

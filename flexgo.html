@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" onclick="Quicktool()">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="flexgo.css">
     <title>Flexgo Game</title>
 </head>
-<body onload="GameRender()" onkeypress="keypress(event)" onkeydown="keypress(event)">
+<body onload="GameRender()" onkeyup="keyup(event)" onkeydown="keypress(event)">
     <div id="jatekterulet">
         <span id="player"></span>
+        <span id="superb"></span>
+        <span id="sprogress"></span>
     </div>
     <script src="./flexgo.js"></script>
     </script>

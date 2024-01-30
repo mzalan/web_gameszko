@@ -8,6 +8,11 @@ let playerSize;
 let playerX;
 let playerY;
 let playerSpeed;
+let wasd = [false, false, false, false];
+let dirCap = 1;
+let movementTimeout = setInterval(PlayerMoving, 10);
+let latestKeys = [0, 0];
+let superCharge = 95;
 let coinCount = 0;
 let tileSize;
 let objects = [];
@@ -24,14 +29,89 @@ class object {
 
 function keypress(event) {
     var key = event.which || event.keyCode;
-    if (key == 87) {
+    if (key == 87 || key == 38) {
+        KeyControls(0);
+    } else if (key == 83 || key == 40) {
+        KeyControls(1);
+    } else if (key == 65 || key == 37) {
+        KeyControls(2);
+    } else if (key == 68 || key == 39) {
+        KeyControls(3);
+    } else if (key == 32 && superCharge == 100) {
+        UseSuper();
+    }
+  
+}
+
+function keyup(event) {
+    var key = event.which || event.keyCode;
+    if (key == 87 || key == 38) {
+        wasd[0] = false;
+    } else if (key == 83 || key == 40) {
+        wasd[1] = false;
+    } else if (key == 65 || key == 37) {
+        wasd[2] = false;
+    } else if (key == 68 || key == 39) {
+        wasd[3] = false;
+    }
+}
+function KeyControls(key) {
+    console.log(dirCap);
+    // wasd[key] = true;
+    // latestKeys.push(key);
+
+    // for(let i = 0; i < latestKeys.length; i++) {
+    //     if(dirCap == 1 && !(wasd[latestKeys[1]]) && latestKeys.length > 1) {
+    //         wasd[latestKeys[0]] = false;
+    //     } 
+    // }
+    // console.log(wasd);
+    // console.log(latestKeys);
+
+    wasd.forEach(dir => {dir = false});
+    console.log(wasd);
+    latestKeys.push(key);
+
+    if(latestKeys.length > 2) {
+        latestKeys.shift();
+    }
+    for(let i = latestKeys.length - 1; i >= latestKeys.length - dirCap; i--) {
+
+        wasd[latestKeys[i]] = true;
+
+    }
+    console.log(wasd);
+    console.log(latestKeys);
+}
+
+function PlayerMoving() {
+    if(wasd[0]) {
         UpdatePlayerPosition(0, playerSpeed * -1);
-    } else if (key == 83) {
+    }
+    if(wasd[1]) {
         UpdatePlayerPosition(0, playerSpeed * 1);
-    } else if (key == 65) {
+    }
+    if(wasd[2]) {
         UpdatePlayerPosition(playerSpeed * -1, 0);
-    } else if (key == 68) {
+    }
+    if(wasd[3]) {
         UpdatePlayerPosition(playerSpeed * 1, 0);
+    }
+}
+
+function UseSuper() {
+    superCharge = 0;
+    if(wasd[0]) {
+        UpdatePlayerPosition(0, playerSpeed * -1 * 15);
+    }
+    if(wasd[1]) {
+        UpdatePlayerPosition(0, playerSpeed * 1 * 15);
+    }
+    if(wasd[2]) {
+        UpdatePlayerPosition(playerSpeed * -1 * 15, 0);
+    }
+    if(wasd[3]) {
+        UpdatePlayerPosition(playerSpeed * 1 * 15, 0);
     }
 }
 
@@ -39,13 +119,30 @@ function UpdatePlayerPosition(x, y) {
     let newPlayerX = CheckPosition(playerX, 0, jatekWidth - playerSize, x);
     let newPlayerY = CheckPosition(playerY, 0, jatekHeight - playerSize, y);
     if (!checkWallCollision(newPlayerY + jatekTop, newPlayerX + jatekLeft, playerSize)) {
+        if(superCharge + 0.15 >= 100) {
+            superCharge = 100;
+        }
+        else {
+            superCharge += 0.42;
+        }
         playerX = newPlayerX;
         playerY = newPlayerY;
         player.style.top = playerY + jatekTop + "px";
         player.style.left = playerX + jatekLeft + "px";
         player.style.width = playerSize + "px";
         player.style.height = playerSize + "px";
-        console.log(playerX + jatekLeft, playerY + jatekTop);
+        superb.style.width = playerSize * 0.8 + "px";
+        superb.style.left = playerX + 0.1 * playerSize + jatekLeft - 0.5 + "px";
+        superb.style.height = playerSize * 0.15 + "px";
+        superb.style.top = jatekTop + playerY + playerSize * 0.75 + "px";
+        superb.style.zIndex = 3;
+        sprogress.style.width = superCharge / 100 * playerSize * 0.8 + "px";
+        sprogress.style.width = superCharge / 100 * playerSize * 0.8 + "px";
+        sprogress.style.left = playerX + 0.1 * playerSize + jatekLeft + 0.5 + "px";
+        sprogress.style.height = playerSize * 0.15 + "px";
+        sprogress.style.top = 1 + jatekTop + playerY + playerSize * 0.75 + "px";
+        sprogress.style.zIndex = 3;
+        // console.log(playerX + jatekLeft, playerY + jatekTop);
         coincollect(playerY + jatekTop, playerX + jatekLeft, playerSize);
         restart(playerY + jatekTop, playerX + jatekLeft, playerSize);
     }
@@ -62,6 +159,10 @@ function CheckPosition(player, minBound, maxBound, delta) {
     }
 }
 
+function Quicktool() {
+    // dirCap = 2;
+}
+//
 function GameRender() {
     objects = [];
     walls = [];
@@ -85,10 +186,9 @@ function GameRender() {
     tileSize = jatekWidth / 36;
     playerSize = tileSize * 1.5;
     playerX = 4 * tileSize;
-    playerY = 5 * tileSize;
+    playerY = 2 * tileSize;
     playerSpeed = tileSize / 2;
     UpdatePlayerPosition(0, 0);
-
     fetch('testlevel2.txt').then((res) => res.text()).then((text) => {
         let lines = text.split("\n");
         for (let y = 0; y < 20; y++) {
